@@ -70,6 +70,9 @@ export default function LoginClient() {
                 id="userName"
                 type="text"
                 autoComplete="username"
+                autoCapitalize="none"
+                autoCorrect="off"
+                spellCheck={false}
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
                 placeholder="PES1UG2XCSXXX"

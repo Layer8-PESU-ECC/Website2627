@@ -58,7 +58,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  const { userName, password } = body;
+  // Mobile keyboards and copy-paste often add stray whitespace around the
+  // username, which PESU Auth treats as a different (invalid) user.
+  const userName = typeof body.userName === "string" ? body.userName.trim() : "";
+  const password = body.password;
   if (!userName || !password) {
     return NextResponse.json(
       { error: "userName and password are required" },
@@ -119,8 +122,11 @@ export async function POST(req: NextRequest) {
   }
 
   if (pesuData.status !== true || !pesuData.profile) {
+    const upstream = pesuData.message ?? "Invalid credentials";
     return NextResponse.json(
-      { error: pesuData.message ?? "Invalid credentials" },
+      {
+        error: `${upstream} ? check that your SRN/PRN and password work on PESU Academy (pesuacademy.com), then try again.`,
+      },
       { status: 401 }
     );
   }

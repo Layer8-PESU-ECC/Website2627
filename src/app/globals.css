@@ -1601,3 +1601,29 @@
     animation: none !important;
   }
 }
+/* phone-only: compact domain picker */
+@media (max-width: 639px) {
+  .domain-grid {
+    gap: 0.5rem;
+  }
+  .domain-tile,
+  .domain-tile-lg {
+    min-height: 0;
+    gap: 0.45rem;
+    padding: 0.65rem 0.85rem 0.7rem;
+  }
+  .domain-tile-name,
+  .domain-tile-lg .domain-tile-name {
+    font-size: 1.3rem;
+  }
+  .domain-tile-blurb {
+    margin-top: 0.2rem;
+    font-size: 0.7rem;
+  }
+  .domain-tile-state {
+    display: none;
+  }
+  .domain-tile-glyph {
+    font-size: 0.85rem;
+  }
+}

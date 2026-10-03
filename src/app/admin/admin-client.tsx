@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../_components/auth-context";
 import { formatToIST } from "@/lib/date";
@@ -266,6 +267,10 @@ export default function AdminPage() {
     <div className="admin-page">
       <div className="admin-container">
         <div className="mb-6">
+          <Link href="/recruitments" className="btn mb-4 inline-flex">
+            &lt; back_to_recruitments
+          </Link>
+          <br />
           <span className="kicker">admin</span>
           <h1 className="text-2xl font-display mt-2">control_panel</h1>
         </div>

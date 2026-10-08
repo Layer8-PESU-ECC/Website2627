@@ -491,17 +491,6 @@ export const MEMBERS: Member[] = [
     email: "",
   },
   {
-    slug: "syed-ayaan-hasan",
-    name: "Syed Ayaan Hasan",
-    alias: "rebus06",
-    role: "",
-    group: "Tech",
-    year: "2028-CSE",
-    bio: "Breaking code professionally",
-    status: "current",
-    email: "",
-  },
-  {
     slug: "rishabh-singh",
     name: "Rishabh Singh",
     alias: "Mani",

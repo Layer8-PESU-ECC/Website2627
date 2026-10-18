@@ -58,6 +58,9 @@ Share emergency passwords through a private channel and require an immediate cha
 
 ## Publishing challenges
 
+All challenge flags must use the exact, case-sensitive format `Layer8{...}`.
+The host console and submission endpoint both enforce this convention.
+
 Hosts can open `/weekly-ctfs/admin` to create, update, publish, and remove weekly operations and challenges. Drafts are invisible to students until `published` is enabled.
 
 The admin UI should call `POST /api/ctf/uploads` with `challengeId`, `fileName`, and `fileSize`. The response contains a short-lived Supabase upload token and object path. Upload the file directly from the browser with `uploadToSignedUrl`, then pass the returned path to `attachChallengeFile`. This avoids sending large evidence files through a Vercel function.

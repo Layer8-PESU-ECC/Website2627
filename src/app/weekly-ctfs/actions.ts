@@ -128,11 +128,35 @@ export async function signUp(
   });
 
   if (error) {
+    // Keep credentials and email out of logs. The Supabase code identifies the
+    // failing auth setting without exposing the user's signup details.
+    console.error("CTF signup failed", {
+      code: error.code,
+      status: error.status,
+    });
+
     if (error.code === "email_address_not_authorized") {
       return {
         error:
           "Account email delivery is not configured yet. Please contact a CTF administrator.",
       };
+    }
+    if (error.code === "captcha_failed") {
+      return {
+        error:
+          "Verification failed. Refresh the page, complete the challenge, and try again. If it persists, contact a CTF administrator.",
+      };
+    }
+    if (error.code === "signup_disabled" || error.code === "email_provider_disabled") {
+      return {
+        error: "New accounts are disabled in the authentication settings. Contact a CTF administrator.",
+      };
+    }
+    if (error.code === "weak_password") {
+      return { error: "This password does not meet the account security requirements." };
+    }
+    if (error.code === "email_address_invalid") {
+      return { error: "Use a real email address; test domains are not supported." };
     }
     if (error.status === 429) {
       return {
@@ -142,7 +166,8 @@ export async function signUp(
     if (/username|duplicate|unique/i.test(error.message)) {
       return { error: "That username is already taken." };
     }
-    return { error: "We could not create that account. Check your details and try again." };
+    // Do not disclose whether an email is registered.
+    return { error: "We could not create that account. Contact a CTF administrator if it persists." };
   }
 
   // When email confirmation is disabled, Supabase creates a session immediately.

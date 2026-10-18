@@ -13,12 +13,12 @@ export default function RecruitmentsClosedClient() {
           <p className="kicker mb-6">{"// ~/recruitments"}</p>
 
           <h1 className="font-mono font-bold uppercase tracking-[0.18em] text-accent glow leading-none break-words text-[clamp(2rem,9vw,5rem)]">
-            <ScrambleText text="APPLICATIONS CLOSED" decryptStepMs={60} />
+            <ScrambleText text="RECRUITMENT OVER" decryptStepMs={60} />
           </h1>
 
           <p className="mt-8 text-sm md:text-base text-fg-dim max-w-md mx-auto">
-            Recruitment isn&apos;t open right now — check back soon or follow
-            Layer8 for the next round.
+            Recruitment for this round is over. Thanks to everyone who
+            applied — follow Layer8 for the next round.
           </p>
         </section>
       </main>

@@ -132,11 +132,27 @@
 
   .wrap {
     width: 100%;
-    max-width: 1160px;
+    max-width: 1360px;
+    min-width: 0;
     margin-inline: auto;
     padding-inline: clamp(1.1rem, 4vw, 2.5rem);
     position: relative;
     z-index: 3;
+  }
+
+  .wrap > *,
+  .panel,
+  .card,
+  .term {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  img,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
   }
 
   /* buttons */
@@ -152,6 +168,8 @@
     background: var(--bg-2);
     color: var(--fg);
     cursor: pointer;
+    max-width: 100%;
+    text-align: center;
     transition:
       border-color 0.18s,
       color 0.18s,
@@ -275,6 +293,8 @@
     gap: 0.5rem;
     padding: 0.6rem 0.9rem;
     border-bottom: 1px solid var(--border);
+    min-width: 0;
+    overflow: hidden;
   }
 
   .term-dot {
@@ -290,6 +310,8 @@
     line-height: 1.9;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
+    min-width: 0;
+    max-width: 100%;
     min-height: 12.5rem;
   }
 
@@ -1603,6 +1625,27 @@
 }
 /* phone-only: compact domain picker */
 @media (max-width: 639px) {
+  .wrap {
+    padding-inline: 1rem;
+  }
+
+  .kicker {
+    letter-spacing: 0.18em;
+    overflow-wrap: anywhere;
+  }
+
+  .term-body {
+    padding: 0.9rem 0.95rem 1.1rem;
+  }
+
+  input,
+  select,
+  textarea {
+    min-width: 0;
+    max-width: 100%;
+    font-size: 16px;
+  }
+
   .domain-grid {
     gap: 0.5rem;
   }

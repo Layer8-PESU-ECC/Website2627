@@ -18,8 +18,8 @@ select id, 'robots-have-secrets', 'Robots Have Secrets', 'web', 'beginner', 100,
 from active_week
 on conflict (week_id, slug) do nothing;
 
--- Demo flag: L8{replace_before_production}
+-- Demo flag: Layer8{replace_before_production}
 insert into public.ctf_challenge_secrets (challenge_id, flag_hash)
-select id, encode(digest('L8{replace_before_production}', 'sha256'), 'hex')
+select id, encode(digest('Layer8{replace_before_production}', 'sha256'), 'hex')
 from public.ctf_challenges where slug = 'robots-have-secrets'
 on conflict (challenge_id) do nothing;

@@ -47,8 +47,18 @@ export function safeAuthRedirect(value: FormDataEntryValue | string | null) {
 }
 
 export function getSiteUrl() {
-  return (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(
-    /\/$/,
-    "",
-  );
+  const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (configuredUrl) return configuredUrl.replace(/\/$/, "");
+
+  const vercelUrl =
+    process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim() ??
+    process.env.VERCEL_URL?.trim();
+  if (vercelUrl) {
+    return `${vercelUrl.startsWith("http") ? "" : "https://"}${vercelUrl}`.replace(
+      /\/$/,
+      "",
+    );
+  }
+
+  return "http://localhost:3000";
 }

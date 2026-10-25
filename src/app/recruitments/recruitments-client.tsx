@@ -184,7 +184,8 @@ export default function RecruitmentsClient() {
   }
   const formRef = useRef<HTMLDivElement>(null);
 
-  const [domains, setDomains] = useState<DomainId[]>(["design"]);
+  // Only the design domain is open, so it is fixed rather than selectable.
+  const domains: DomainId[] = ["design"];
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [portfolioUrl, setPortfolioUrl] = useState("");
@@ -242,14 +243,6 @@ export default function RecruitmentsClient() {
     formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  function toggleDomain(id: DomainId) {
-    setDomains((prev) => {
-      if (prev.includes(id)) return prev.filter((d) => d !== id);
-      if (prev.length >= 2) return prev;
-      return [...prev, id];
-    });
-  }
-
   // Maps each marketing/media/design question id to its own dedicated
   // [value, setter] pair — mirrors how tech/events fields already work,
   // instead of everything piling into one generic answers object.
@@ -274,7 +267,6 @@ export default function RecruitmentsClient() {
     if (!year) missing.push("year (see the note above the form)");
     if (!email.trim()) missing.push("email");
     if (!phone.trim()) missing.push("phone");
-    if (domains.length === 0) missing.push("at least one domain");
 
     if (domains.includes("marketing")) {
       if (!marketingWhyDomain.trim()) missing.push("why join marketing");
@@ -616,47 +608,7 @@ export default function RecruitmentsClient() {
             </section>
 
             <section>
-              <FormHead n="02" title="your domain" note="design only" />
-              <div className="domain-grid">
-                {DOMAINS.map((d, i) => {
-                  const active = domains.includes(d.id);
-                  const disabled = !active && domains.length >= 2;
-                  return (
-                    <label
-                      key={d.id}
-                      className={`domain-tile ${d.layout} ${
-                        active ? "domain-tile-active" : ""
-                      } ${disabled ? "domain-tile-disabled" : ""}`}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={active}
-                        disabled={disabled}
-                        onChange={() => toggleDomain(d.id)}
-                      />
-                      <span className="domain-tile-top">
-                        <span className="domain-tile-idx">
-                          {String(i + 1).padStart(2, "0")}
-                        </span>
-                        <span className="domain-tile-glyph" aria-hidden="true">
-                          {d.glyph}
-                        </span>
-                      </span>
-                      <span>
-                        <span className="domain-tile-name">{d.label}</span>
-                        <span className="domain-tile-blurb">{d.blurb}</span>
-                        <span className="domain-tile-state">
-                          {active ? "✓ picked" : disabled ? "max 2 reached" : "+ pick"}
-                        </span>
-                      </span>
-                    </label>
-                  );
-                })}
-              </div>
-            </section>
-
-            <section>
-              <FormHead n="03" title="about you" />
+              <FormHead n="02" title="about you" />
               <Field label="why do you want to join the club?">
                 <textarea
                   className="ta-lg"
@@ -873,7 +825,7 @@ export default function RecruitmentsClient() {
             )}
 
             <section>
-              <FormHead n="04" title="wrap up" />
+              <FormHead n="03" title="wrap up" />
               <Field label="feedback & queries">
                 <textarea
                   className="ta-sm"
@@ -889,14 +841,12 @@ export default function RecruitmentsClient() {
 
               <div className="flex flex-col-reverse gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <p className="field-hint">
-                  {domains.length === 0
-                    ? "select at least one domain to submit"
-                    : `applying to: ${domains.join(" + ")}`}
+                  {`applying to: ${domains.join(" + ")}`}
                 </p>
                 <button
                   type="submit"
                   className="btn btn-solid justify-center sm:px-10"
-                  disabled={domains.length === 0 || status === "submitting"}
+                  disabled={status === "submitting"}
                 >
                   {status === "submitting" ? "submitting..." : "submit_application"}
                 </button>

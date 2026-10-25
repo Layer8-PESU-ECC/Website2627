@@ -29,6 +29,10 @@ export const DOMAIN_VALUES = [
   "events",
 ] as const;
 
+// Domains currently accepting applications. Keep in sync with the
+// domain list in app/recruitments/recruitments-client.tsx.
+export const OPEN_DOMAINS = ["design"] as const;
+
 export const applicationSchema = z
   .object({
     fullName: cleanedString(200),
@@ -39,7 +43,11 @@ export const applicationSchema = z
     phone: cleanedString(20),
     domains: z
       .array(z.enum(DOMAIN_VALUES))
-      .min(1, "Select at least one domain"),
+      .min(1, "Select at least one domain")
+      .refine(
+        (ds) => ds.every((d) => (OPEN_DOMAINS as readonly string[]).includes(d)),
+        { message: "Only the design domain is open for applications" }
+      ),
     domainAnswers: z.record(z.string(), z.unknown()).optional(),
     experience: optionalCleanedString(4000),
     portfolioUrl: z

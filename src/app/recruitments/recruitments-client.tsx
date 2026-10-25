@@ -23,11 +23,7 @@ const DOMAINS: {
   glyph: string;
   layout: string;
 }[] = [
-  { id: "tech", label: "tech", blurb: "build & break things", glyph: "</>", layout: "col-span-2 sm:col-span-3 domain-tile-lg" },
-  { id: "events", label: "events", blurb: "plan & run experiences", glyph: "◈", layout: "col-span-2 sm:col-span-3 domain-tile-lg" },
-  { id: "marketing", label: "marketing", blurb: "campaigns, copy, outreach", glyph: "↗", layout: "col-span-1 sm:col-span-2" },
-  { id: "media", label: "media", blurb: "photo, video, socials", glyph: "◉", layout: "col-span-1 sm:col-span-2" },
-  { id: "design", label: "design", blurb: "visual identity, UI/UX", glyph: "◇", layout: "col-span-2 sm:col-span-2" },
+  { id: "design", label: "design", blurb: "visual identity, UI/UX", glyph: "◇", layout: "col-span-2 sm:col-span-6 domain-tile-lg" },
 ];
 
 function FormHead({ n, title, note }: { n: string; title: string; note?: string }) {
@@ -188,7 +184,7 @@ export default function RecruitmentsClient() {
   }
   const formRef = useRef<HTMLDivElement>(null);
 
-  const [domains, setDomains] = useState<DomainId[]>([]);
+  const [domains, setDomains] = useState<DomainId[]>(["design"]);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [portfolioUrl, setPortfolioUrl] = useState("");
@@ -420,7 +416,7 @@ export default function RecruitmentsClient() {
                 build something real.
               </h1>
               <p className="text-fg-dim mb-8 max-w-md">
-                One application, five domains, no fluff. Log in with your PESU
+                One application, design domain open, no fluff. Log in with your PESU
                 Academy credentials and we auto-fill the boring parts so you can
                 get straight to telling us why you&apos;d be a good fit.
               </p>
@@ -620,7 +616,7 @@ export default function RecruitmentsClient() {
             </section>
 
             <section>
-              <FormHead n="02" title="pick your domains" note="max 2" />
+              <FormHead n="02" title="your domain" note="design only" />
               <div className="domain-grid">
                 {DOMAINS.map((d, i) => {
                   const active = domains.includes(d.id);
